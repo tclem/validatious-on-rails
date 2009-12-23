@@ -199,8 +199,12 @@ module ValidatiousOnRails
       validators = []
       validation.options[:allow_nil] = false if validation.options[:allow_nil].nil?
       validation.options[:allow_blank] = false if validation.options[:allow_blank].nil?
-      validators << Validatious::FormatWithValidator.new(validation.options[:with],
-                                                         validation.options[:allow_nil], validation.options[:allow_blank])
+      ValidatiousOnRails.log "tim says #{validation.options[:message]}"
+      v = Validatious::FormatWithValidator.new(validation.options[:with],
+                                                         validation.options[:allow_nil], 
+                                                         validation.options[:allow_blank])
+      v.message = validation.options[:message] unless validation.options[:message].blank?                                                   
+      validators << v
     end
 
     # Resolve validation from validates_inclusion_of.
